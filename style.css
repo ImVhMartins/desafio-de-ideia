@@ -374,6 +374,8 @@ textarea {
   width: 100%;
   object-fit: cover;
   background-image: url(Gemini_Generated_Image_wqb1ftwqb1ftwqb1.png);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
   color: #f9fafb;
   display: flex;
   align-items: center;
