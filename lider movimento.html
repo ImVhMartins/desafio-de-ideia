@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Líder de Movimento</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-left">
+    <h1>Sistema de Integração de Movimentação</h1>
+    <p class="subtitle">Líder de Movimento</p>
+  </div>
+  <div class="topbar-right">
+    <a href="lider secao.html" class="btn small">Ir para Líder de Seção</a>
+  </div>
+</header>
+
+<main class="container">
+
+  <div class="grid-2">
+
+    <section class="card">
+      <h2>Pedidos</h2>
+
+      <div class="filters">
+        <div class="field-group">
+          <label>Status</label>
+          <select id="filtro-status-mov">
+            <option value="ativos">Ativos</option>
+            <option value="todos">Todos</option>
+            <option value="aguardando">Aguardando</option>
+            <option value="em_separacao">Em separação</option>
+            <option value="em_transporte">Em transporte</option>
+            <option value="entregue">Entregue</option>
+            <option value="cancelado">Cancelado</option>
+          </select>
+        </div>
+
+        <div class="field-group">
+          <label>Prioridade</label>
+          <select id="filtro-prioridade-mov">
+            <option value="todas">Todas</option>
+            <option value="baixa">Baixa</option>
+            <option value="media">Média</option>
+            <option value="alta">Alta</option>
+            <option value="urgente">Urgente</option>
+          </select>
+        </div>
+
+        <div class="field-group">
+          <label>Busca</label>
+          <input type="text" id="filtro-texto-mov">
+        </div>
+      </div>
+
+      <div id="lista-pedidos-movimento" class="table-wrapper"></div>
+    </section>
+
+    <section class="card">
+      <h2>Mapa do Almoxarifado</h2>
+
+      <div class="mapa-imagem-wrapper">
+        <img src="WhatsApp Image 2025-11-26 at 8.32.26 AM.jpeg" class="mapa-imagem" alt="Mapa">
+      </div>
+
+      <div id="detalhes-pedido" class="pedido-detalhes">
+        <h3>Detalhes</h3>
+        <div class="pedido-detalhes-conteudo">
+          <p>Selecione um pedido na tabela.</p>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+</main>
+
+<footer class="footer">
+  <span>Sistema – Líder de Movimento</span>
+</footer>
+
+<script src="movimento.js"></script>
+</body>
+</html>

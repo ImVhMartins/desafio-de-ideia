@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Líder de Seção - Sistema</title>
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-left">
+    <h1>Sistema de Integração de Movimentação</h1>
+    <p class="subtitle">Líder de Seção</p>
+  </div>
+  <div class="topbar-right">
+    <a href="../lider movimento.html" class="btn small">Ir para Líder de Movimento</a>
+  </div>
+</header>
+
+<main class="container">
+  <div class="grid-2">
+
+    <section class="card">
+      <h2>Novo pedido de peça</h2>
+
+      <form id="form-pedido-secao">
+        <div class="field-group">
+          <label>Seção</label>
+          <input type="text" name="secao" required>
+        </div>
+
+        <div class="field-row">
+          <div class="field-group">
+            <label>Tipo de movimentação</label>
+            <select name="tipoMovimentacao">
+              <option value="abastecimento">Abastecimento</option>
+              <option value="retirada">Retirada</option>
+              <option value="devolucao">Devolução</option>
+              <option value="transferencia">Transferência</option>
+            </select>
+          </div>
+
+          <div class="field-group">
+            <label>Prioridade</label>
+            <select name="prioridade">
+              <option value="baixa">Baixa</option>
+              <option value="media" selected>Média</option>
+              <option value="alta">Alta</option>
+              <option value="urgente">Urgente</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="field-group">
+          <label>Agendar para (opcional)</label>
+          <input type="datetime-local" name="agendamento">
+        </div>
+
+        <hr class="divider">
+
+        <h3>Dados da peça</h3>
+
+        <div class="field-row">
+          <div class="field-group">
+            <label>Código da peça</label>
+            <input type="text" name="codigoPeca" required>
+          </div>
+          <div class="field-group">
+            <label>Descrição</label>
+            <input type="text" name="descricaoPeca">
+          </div>
+        </div>
+
+        <div class="field-row">
+          <div class="field-group">
+            <label>Nº da OP</label>
+            <input type="text" name="numeroOP">
+          </div>
+          <div class="field-group">
+            <label>Quantidade</label>
+            <input type="number" name="quantidade" min="1" value="1" required>
+          </div>
+        </div>
+
+        <div class="field-group">
+          <label>Unidade</label>
+          <input type="text" name="unidade">
+        </div>
+
+        <div class="field-group">
+          <label>Observação</label>
+          <textarea name="observacao" rows="3"></textarea>
+        </div>
+
+        <button class="btn primary full" type="submit">Registrar pedido</button>
+      </form>
+    </section>
+
+    <section class="card">
+      <div class="card-header">
+        <h2>Meus pedidos</h2>
+        <button type="button" class="btn small" id="btn-limpar-pedidos">Limpar tudo</button>
+      </div>
+
+      <div class="filters">
+        <div class="field-group">
+          <label>Status</label>
+          <select id="filtro-status-secao">
+            <option value="todos">Todos</option>
+            <option value="aguardando">Aguardando</option>
+            <option value="em_separacao">Em separação</option>
+            <option value="em_transporte">Em transporte</option>
+            <option value="entregue">Entregue</option>
+            <option value="cancelado">Cancelado</option>
+          </select>
+        </div>
+
+        <div class="field-group">
+          <label>Prioridade</label>
+          <select id="filtro-prioridade-secao">
+            <option value="todas">Todas</option>
+            <option value="baixa">Baixa</option>
+            <option value="media">Média</option>
+            <option value="alta">Alta</option>
+            <option value="urgente">Urgente</option>
+          </select>
+        </div>
+      </div>
+
+      <div id="lista-pedidos-secao" class="table-wrapper"></div>
+
+      <h3>Mapa do almoxarifado</h3>
+      <div class="mapa-imagem-wrapper">
+        <img src="WhatsApp Image 2025-11-26 at 8.32.26 AM.jpeg" alt="Mapa do almoxarifado" class="mapa-imagem">
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<footer class="footer">
+  <span>Sistema – Líder de Seção</span>
+</footer>
+
+<script src="../../secao.js"></script>
+</body>
+</html>
