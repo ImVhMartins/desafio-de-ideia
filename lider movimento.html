@@ -3,22 +3,27 @@
 <head>
   <meta charset="UTF-8">
   <title>Líder de Movimento</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="style.css">
+  <script src="auth.js" defer></script>
+  <script src="ui.js" defer></script>
+  <script src="movimento.js" defer></script>
 </head>
 <body>
 
 <header class="topbar">
-  <div class="topbar-left">
+  <div>
     <h1>Sistema de Integração de Movimentação</h1>
     <p class="subtitle">Líder de Movimento</p>
   </div>
-  <div class="topbar-right">
+  <div>
+    <span data-user-info class="user-pill"></span>
     <a href="lider secao.html" class="btn small">Ir para Líder de Seção</a>
+    <button class="btn small" onclick="logout()">Sair</button>
   </div>
 </header>
 
 <main class="container">
-
   <div class="grid-2">
 
     <section class="card">
@@ -51,7 +56,7 @@
 
         <div class="field-group">
           <label>Busca</label>
-          <input type="text" id="filtro-texto-mov">
+          <input type="text" id="filtro-texto-mov" placeholder="Peça, seção ou OP">
         </div>
       </div>
 
@@ -59,28 +64,46 @@
     </section>
 
     <section class="card">
-      <h2>Mapa do Almoxarifado</h2>
+      <h2>Mapa industrial</h2>
 
       <div class="mapa-imagem-wrapper">
-        <img src="WhatsApp Image 2025-11-26 at 8.32.26 AM.jpeg" class="mapa-imagem" alt="Mapa">
+        <img src="mapa_fabrica.jpeg" class="mapa-imagem" alt="Mapa da fábrica">
+
+        <button class="map-sector" data-secao="Usinagem"
+          style="top:12%;left:12%;width:22%;height:25%;">Usinagem</button>
+        <button class="map-sector" data-secao="Torno"
+          style="top:15%;left:40%;width:20%;height:22%;">Torno</button>
+        <button class="map-sector" data-secao="Prensa"
+          style="top:45%;left:10%;width:25%;height:22%;">Prensa</button>
+        <button class="map-sector" data-secao="Montagem"
+          style="top:45%;left:40%;width:25%;height:25%;">Montagem</button>
+        <button class="map-sector" data-secao="Almoxarifado"
+          style="top:20%;left:70%;width:20%;height:40%;">Almox.</button>
+
+        <div id="map-highlight" class="map-highlight map-highlight-hidden"></div>
       </div>
 
       <div id="detalhes-pedido" class="pedido-detalhes">
-        <h3>Detalhes</h3>
+        <h3>Detalhes do pedido</h3>
         <div class="pedido-detalhes-conteudo">
-          <p>Selecione um pedido na tabela.</p>
+          <p class="landing-help">Selecione um pedido na tabela para ver detalhes e localização no mapa.</p>
         </div>
       </div>
     </section>
 
   </div>
 
+  <section class="card" style="margin-top:1rem;">
+    <h2>Dashboard de produtividade</h2>
+    <div id="dashboard-kpis" class="dashboard-grid"></div>
+  </section>
 </main>
+
+<div id="toast-container" class="toast-container"></div>
 
 <footer class="footer">
   <span>Sistema – Líder de Movimento</span>
 </footer>
 
-<script src="movimento.js"></script>
 </body>
 </html>

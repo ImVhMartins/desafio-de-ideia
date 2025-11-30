@@ -1,6 +1,11 @@
-const STORAGE_KEY = "sistema-mov-pedidos";
+// secao.js
 
+const STORAGE_KEY = "sistema-mov-pedidos";
 let pedidos = [];
+
+if (typeof exigirPapel === "function") {
+  exigirPapel("lider_secao");
+}
 
 function loadPedidos() {
   const raw = localStorage.getItem(STORAGE_KEY);
@@ -35,15 +40,15 @@ function renderPedidosSecao() {
   });
 
   if (filtrados.length === 0) {
-    wrapper.innerHTML = `<p class="hint" style="padding:1rem;">Nenhum pedido encontrado.</p>`;
+    wrapper.innerHTML = `<p class="landing-help" style="padding:1rem;">Nenhum pedido encontrado.</p>`;
     return;
   }
 
   const linhas = filtrados.map(p => {
-    const podeCancelar = p.status !== "entregue" && p.status !== "cancelado";
+    const podeCancelar = !["entregue", "cancelado"].includes(p.status);
     return `
       <tr data-id="${p.id}">
-        <td>#${String(p.id).padStart(4, "0")}</td>
+        <td>${formatIdPedido(p.id)}</td>
         <td>${p.secao}</td>
         <td>${p.numeroOP || "-"}</td>
         <td>${formatarDataHora(p.criadoEm)}</td>
@@ -52,7 +57,7 @@ function renderPedidosSecao() {
         <td>${p.codigoPeca}</td>
         <td>${p.quantidade}</td>
         <td>
-          ${podeCancelar ? `<button type="button" class="btn small btn-cancelar" data-id="${p.id}">Cancelar</button>` : ""}
+          ${podeCancelar ? `<button class="btn small btn-cancelar" data-id="${p.id}">Cancelar</button>` : ""}
         </td>
       </tr>
     `;
@@ -90,7 +95,7 @@ function registrarNovoPedido(form) {
     status: "aguardando",
     agendadoPara: fd.get("agendamento") || null,
     codigoPeca: fd.get("codigoPeca").trim(),
-    descricaoPeca: fd.get("descricaoPeca").trim(),
+    descricaoPeca: (fd.get("descricaoPeca") || "").trim(),
     numeroOP: (fd.get("numeroOP") || "").trim(),
     quantidade: Number(fd.get("quantidade") || "1"),
     unidade: (fd.get("unidade") || "").trim(),
@@ -100,6 +105,10 @@ function registrarNovoPedido(form) {
   pedidos.push(novo);
   savePedidos();
   renderPedidosSecao();
+
+  if (typeof showToast === "function") {
+    showToast(`Pedido ${formatIdPedido(novo.id)} enviado para movimentação.`);
+  }
 }
 
 function configurarForm() {
@@ -128,9 +137,12 @@ function configurarTabela() {
       const pedido = pedidos.find(p => p.id === id);
       if (!pedido) return;
       if (!confirm("Cancelar este pedido?")) return;
+
       pedido.status = "cancelado";
       savePedidos();
       renderPedidosSecao();
+
+      showToast?.(`Pedido ${formatIdPedido(id)} cancelado.`);
       return;
     }
 
@@ -139,6 +151,51 @@ function configurarTabela() {
       const id = linha.dataset.id;
       window.location.href = `lider movimento.html?id=${id}`;
     }
+  });
+}
+
+/* MAPA – clicar preenche seção + highlight */
+
+function destacarSecao(secao) {
+  const highlight = document.getElementById("map-highlight");
+  if (!highlight) return;
+
+  const map = {
+    "Usinagem":     { top: "12%", left: "12%", width: "22%", height: "25%" },
+    "Torno":        { top: "15%", left: "40%", width: "20%", height: "22%" },
+    "Prensa":       { top: "45%", left: "10%", width: "25%", height: "22%" },
+    "Montagem":     { top: "45%", left: "40%", width: "25%", height: "25%" },
+    "Almoxarifado": { top: "20%", left: "70%", width: "20%", height: "40%" }
+  };
+
+  const pos = map[secao];
+  if (!pos) {
+    highlight.classList.add("map-highlight-hidden");
+    return;
+  }
+
+  highlight.style.top = pos.top;
+  highlight.style.left = pos.left;
+  highlight.style.width = pos.width;
+  highlight.style.height = pos.height;
+  highlight.classList.remove("map-highlight-hidden");
+}
+
+function configurarMapaSecao() {
+  const wrapper = document.querySelector(".mapa-imagem-wrapper");
+  if (!wrapper) return;
+
+  const campoSecao = document.querySelector('input[name="secao"]');
+
+  wrapper.addEventListener("click", e => {
+    const setor = e.target.closest(".map-sector");
+    if (!setor) return;
+
+    const secaoNome = setor.dataset.secao;
+    if (campoSecao) campoSecao.value = secaoNome;
+
+    destacarSecao(secaoNome);
+    showToast?.(`Seção selecionada: "${secaoNome}".`);
   });
 }
 
@@ -160,6 +217,7 @@ document.addEventListener("DOMContentLoaded", () => {
   configurarForm();
   configurarFiltros();
   configurarTabela();
+  configurarMapaSecao();
   configurarBotaoLimpar();
   renderPedidosSecao();
 });

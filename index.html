@@ -1,45 +1,97 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
-  <meta charset="UTF-8">
-  <title>Sistema de Integração</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mastermag | Login</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
+
 <body class="landing-body">
 
   <div class="landing-wrapper">
+
+    <!-- Lado esquerdo: formulário -->
     <div class="landing-panel">
-      <p class="landing-kicker">Desafio de Ideias · Grupo Azul</p>
-      <h1 class="landing-title">
-        Escolha como deseja entrar.
-      </h1>
+      <span class="landing-kicker">ACESSO AO SISTEMA</span>
+      <h1 class="landing-title">Entrar.</h1>
       <p class="landing-subtitle">
-        Acesse o sistema como líder de seção ou líder de movimento para gerenciar pedidos de peças e movimentações em tempo real.
+        Faça login para acessar o sistema de movimentação interna.
       </p>
 
-      <div class="landing-buttons">
-        <a href="lider secao.html" class="btn btn-gradient full">
-          Entrar como Líder de Seção
-        </a>
-        <a href="../lider movimento.html" class="btn btn-outline-light full">
-          Entrar como Líder de Movimento
-        </a>
-      </div>
+      <form id="loginForm">
+        <div class="field-row">
+          <div class="field-group">
+            <label>Usuário</label>
+            <input type="text" id="usuario" autocomplete="off">
+          </div>
+
+          <div class="field-group">
+            <label>Senha</label>
+            <input type="password" id="senha">
+          </div>
+        </div>
+
+        <button class="btn full" type="submit">Entrar</button>
+
+        <p id="login-erro" class="login-erro" style="display:none;">
+          Usuário ou senha inválidos.
+        </p>
+      </form>
 
       <p class="landing-help">
-        Precisa de ajuda? Fale com o time de TI da fábrica.
+        Acessos de teste:<br>
+        <strong>Líder de Seção:</strong> secao1 / 123 <br>
+        <strong>Líder de Movimento:</strong> mov1 / 123
       </p>
     </div>
 
+    <!-- Lado direito: logo + degradê -->
     <div class="landing-hero">
       <div class="landing-hero-overlay">
         <div class="landing-hero-text">
-          <img src="mastermag.png" alt="">
-          <span>Fluxo integrado</span>
-          <strong>Produção e Movimentação em sincronia.</strong>
+
+          <!-- LOGO CENTRALIZADA -->
+          <div class="landing-logo-wrapper">
+            <img src="mastermag.png" alt="Mastermag">
+          </div>
+
+          <!-- TEXTOS NO DEGRADÊ -->
+          <div class="landing-text-bottom">
+            <span>FLUXO INTEGRADO</span><br>
+            <strong>Produção e movimentação em sincronia.</strong>
+          </div>
+
         </div>
       </div>
     </div>
+
   </div>
+
+  <script src="auth.js"></script>
+  <script>
+    // Login simples usando auth.js
+    document.getElementById("loginForm").addEventListener("submit", (e) => {
+      e.preventDefault();
+      const usuario = document.getElementById("usuario").value.trim();
+      const senha = document.getElementById("senha").value.trim();
+      const erro = document.getElementById("login-erro");
+
+      const u = login(usuario, senha);
+
+      if (!u) {
+        erro.style.display = "block";
+        return;
+      }
+
+      erro.style.display = "none";
+
+      if (u.role === "lider_secao") {
+        window.location.href = "lider secao.html";
+      } else if (u.role === "lider_mov") {
+        window.location.href = "lider movimento.html";
+      }
+    });
+  </script>
 </body>
 </html>

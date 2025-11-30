@@ -1,19 +1,25 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta charset="UTF-8">
-  <title>Líder de Seção - Sistema</title>
-  <link rel="stylesheet" href="../style.css">
+  <title>Líder de Seção</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="auth.js" defer></script>
+  <script src="ui.js" defer></script>
+  <script src="secao.js" defer></script>
 </head>
 <body>
 
 <header class="topbar">
-  <div class="topbar-left">
+  <div>
     <h1>Sistema de Integração de Movimentação</h1>
     <p class="subtitle">Líder de Seção</p>
   </div>
-  <div class="topbar-right">
-    <a href="../lider movimento.html" class="btn small">Ir para Líder de Movimento</a>
+  <div>
+    <span data-user-info class="user-pill"></span>
+    <a href="lider movimento.html" class="btn small">Ir para Líder de Movimento</a>
+    <button class="btn small" onclick="logout()">Sair</button>
   </div>
 </header>
 
@@ -92,7 +98,7 @@
           <textarea name="observacao" rows="3"></textarea>
         </div>
 
-        <button class="btn primary full" type="submit">Registrar pedido</button>
+        <button class="btn full" type="submit">Registrar pedido</button>
       </form>
     </section>
 
@@ -128,20 +134,41 @@
       </div>
 
       <div id="lista-pedidos-secao" class="table-wrapper"></div>
-
-      <h3>Mapa do almoxarifado</h3>
-      <div class="mapa-imagem-wrapper">
-        <img src="WhatsApp Image 2025-11-26 at 8.32.26 AM.jpeg" alt="Mapa do almoxarifado" class="mapa-imagem">
-      </div>
     </section>
 
   </div>
+
+  <section class="card" style="margin-top:1rem;">
+    <h2>Mapa industrial</h2>
+
+    <div class="mapa-imagem-wrapper">
+      <img src="mapa_fabrica.jpeg" class="mapa-imagem" alt="Mapa da fábrica">
+
+      <button class="map-sector" data-secao="Usinagem"
+        style="top:12%;left:12%;width:22%;height:25%;">Usinagem</button>
+      <button class="map-sector" data-secao="Torno"
+        style="top:15%;left:40%;width:20%;height:22%;">Torno</button>
+      <button class="map-sector" data-secao="Prensa"
+        style="top:45%;left:10%;width:25%;height:22%;">Prensa</button>
+      <button class="map-sector" data-secao="Montagem"
+        style="top:45%;left:40%;width:25%;height:25%;">Montagem</button>
+      <button class="map-sector" data-secao="Almoxarifado"
+        style="top:20%;left:70%;width:20%;height:40%;">Almox.</button>
+
+      <div id="map-highlight" class="map-highlight map-highlight-hidden"></div>
+    </div>
+
+    <p class="landing-help" style="margin-top:0.5rem;">
+      Clique em um setor do mapa para preencher a seção automaticamente.
+    </p>
+  </section>
 </main>
+
+<div id="toast-container" class="toast-container"></div>
 
 <footer class="footer">
   <span>Sistema – Líder de Seção</span>
 </footer>
 
-<script src="../../secao.js"></script>
 </body>
 </html>
