@@ -234,18 +234,14 @@ function atualizarDashboard() {
   `;
 }
 
-/* MAPA – clicar filtra por seção + highlight */
+/* MAPA – destacar Furadeira */
 
 function destacarSecao(secao) {
   const highlight = document.getElementById("map-highlight");
   if (!highlight) return;
 
   const map = {
-    "Usinagem":     { top: "12%", left: "12%", width: "22%", height: "25%" },
-    "Torno":        { top: "15%", left: "40%", width: "20%", height: "22%" },
-    "Prensa":       { top: "45%", left: "10%", width: "25%", height: "22%" },
-    "Montagem":     { top: "45%", left: "40%", width: "25%", height: "25%" },
-    "Almoxarifado": { top: "20%", left: "70%", width: "20%", height: "40%" }
+    "Furadeira": { top: "64%", left: "42%", width: "16%", height: "12%" }
   };
 
   const pos = map[secao];
@@ -266,7 +262,7 @@ function configurarMapaMovimento() {
   if (!wrapper) return;
 
   wrapper.addEventListener("click", e => {
-    const setor = e.target.closest(".map-sector");
+    const setor = e.target.closest(".map-point");
     if (!setor) return;
 
     const secao = setor.dataset.secao;

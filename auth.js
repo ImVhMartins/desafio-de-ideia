@@ -1,8 +1,8 @@
 // auth.js
 
 const USERS = [
-  { username: "secao1", password: "123", role: "lider_secao", nome: "Líder de Seção - Turno A" },
-  { username: "mov1",   password: "123", role: "lider_mov",   nome: "Líder de Movimento - Turno A" },
+  { username: "Furadeira", password: "123", role: "lider_secao", nome: "Líder da Seção de furadeiras " },
+  { username: "Angelo",   password: "123", role: "lider_mov",   nome: "Líder de Movimento" },
 ];
 
 const AUTH_KEY = "sistema-usuario-logado";
